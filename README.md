@@ -1,6 +1,6 @@
 # 🚌 Campus Ride — Distributed Systems Project
 
-> A cloud-native ride-sharing platform for UUM students, built with FastAPI, Next.js, PostgreSQL, Docker, and Kubernetes — deployed on Railway.
+> A cloud-native ride-sharing platform for UUM students, built with FastAPI, Next.js, PostgreSQL, Docker, and Kubernetes, deployed on Railway.
 
 **Live URL:** https://frontend-production-1637.up.railway.app  
 **Backend API:** https://backend-production-7e5f.up.railway.app  
