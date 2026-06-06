@@ -1,4 +1,4 @@
-# 🚌 Campus Ride — Distributed Systems Project
+# 🚌 CAMPUS RIDE (REAL - TIME DISTRIBUTED TRANSPORTATION PLATFORM)
 
 > A cloud-native ride-sharing platform for UUM students, built with FastAPI, Next.js, PostgreSQL, Docker, and Kubernetes, deployed on Railway.
 
