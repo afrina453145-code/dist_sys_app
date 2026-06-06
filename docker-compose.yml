@@ -1,0 +1,18 @@
+services:
+  campus-backend:
+    build:
+      context: ./backend
+    container_name: campus-backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  campus-frontend:
+    build:
+      context: ./frontend
+    container_name: campus-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - campus-backend
+    restart: unless-stopped

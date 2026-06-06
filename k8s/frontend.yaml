@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campus-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: campus-frontend
+  template:
+    metadata:
+      labels:
+        app: campus-frontend
+    spec:
+      containers:
+      - name: campus-frontend
+        image: afrinaatiqah/campus-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: campus-config
+        - secretRef:
+            name: campus-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: campus-frontend-service
+spec:
+  selector:
+    app: campus-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: ClusterIP

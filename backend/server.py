@@ -6,6 +6,8 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
     host = os.getenv("HOST", "127.0.0.1")
     
+    host = '127.0.0.1'
+    port = int(8000)
     print(f"🚀 Starting Campus Ride Backend Server on http://{host}:{port}")
     
     # Run the uvicorn server pointing to the FastAPI app in app/main.py

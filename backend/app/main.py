@@ -15,10 +15,26 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="Campus Ride API", 
+    title="Campus Ride API",
     version="0.2.0",
     lifespan=lifespan
 )
+
+# Custom Swagger UI using local bundle
+from fastapi.openapi.docs import get_swagger_ui_html
+from swagger_ui_bundle import swagger_ui_path
+from fastapi.staticfiles import StaticFiles
+
+app.mount("/static", StaticFiles(directory=swagger_ui_path), name="static")
+
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui():
+    return get_swagger_ui_html(
+        openapi_url="/openapi.json",
+        title="Campus Ride API",
+        swagger_js_url="/static/swagger-ui-bundle.js",
+        swagger_css_url="/static/swagger-ui.css",
+    )
 
 # Add Middlewares
 app.add_middleware(LoggingMiddleware)

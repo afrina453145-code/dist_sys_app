@@ -1,41 +1,22 @@
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-import os
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-# Connection string using asyncpg driver
-HOST = "localhost"
-PORT = "5432"
-USER = "postgres"
-PASSWORD = "123"
-DATABASE = "campus"
+# 1. Setup the connection string
+SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://postgres.xjfstxulsyfqyvxinazg:Afrina453145@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres"
 
-# Note the change to +asyncpg
-SQLALCHEMY_DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    f"postgresql+asyncpg://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
-)
-
-# Create Async Engine
+# 2. Create the engine
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL,
     echo=False,
-    future=True
+    future=True,
+    connect_args={"ssl": "require"}
 )
 
-# Async Session Factory
-AsyncSessionLocal = async_sessionmaker(
-    bind=engine,
-    class_=AsyncSession,
-    expire_on_commit=False,
-    autocommit=False,
-    autoflush=False
-)
-
+# 3. Create Session and Base
+SessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 Base = declarative_base()
 
+# 4. The helper function (The one currently missing!)
 async def get_db():
-    async with AsyncSessionLocal() as session:
-        try:
-            yield session
-        finally:
-            await session.close()
+    async with SessionLocal() as session:
+        yield session
